@@ -1,0 +1,197 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table libro {
+id int [pk, increment]
+TituloOriginal varchar
+descripcion varchar
+fecha_publicacion date
+idioma_original_id int [ref: > idioma.id]
+}
+
+Table autor {
+id int [pk, increment]
+name varchar
+description varchar
+}
+
+
+Table libros_autores {
+id int [pk, increment]
+autor_id int [ref: > autor.id]
+libro_id int [ref: > libro.id]
+categoria_id int [ref: > categoria.id]
+description varchar
+}
+
+Table edicion {
+id int [pk, increment]
+isbn varchar
+Titulo varchar
+descripcion nvarchar
+numero_edicion int
+fecha_publicacion date
+numero_paginas int
+ancho int
+largo int
+grosor int
+peso int
+precio float
+libro_id int [ref: > libro.id]
+idioma__id int [ref: > idioma.id]
+editor_id int [ref: > editor.id]
+formato_id int [ref: > formato.id]
+presentacion_id int [ref: > presentacion.id]
+}
+
+Table editor {
+id int [pk, increment]
+name varchar
+description varchar
+}
+
+Table idioma {
+id int [pk, increment]
+name varchar
+description varchar
+}
+
+Table categoria {
+id int [pk, increment]
+name varchar
+description varchar
+}
+
+Table formato {
+id int [pk, increment]
+name varchar
+description varchar
+}
+
+Table presentacion {
+id int [pk, increment]
+name varchar
+description varchar
+}
+
+Table ubicacion {
+id int [pk, increment]
+name varchar
+description varchar
+}
+
+Table existencia {
+id int [pk, increment]
+edicion_id int [ref: > edicion.id]
+ubicacion_id int [ref: > ubicacion.id]
+cantidad integer
+}
+
+Table cliente {
+id int [pk, increment]
+nombre varchar
+documento_identidad varchar
+direccion varchar
+telefono_celular varchar
+telefono_fijo varchar
+email varchar
+}
+
+Table pedido {
+id int [pk, increment]
+
+cliente_id int [ref: > cliente.id]
+fecha_orden date
+telefono_contacto varchar
+email_notificaciones varchar
+valor_flete varchar
+estado_id int [ref: > estado_pedido.id]
+
+}
+
+Table detalle_pedido {
+id int [pk, increment]
+edicion_id int [ref: > edicion.id]
+pedido_id int [ref: > pedido.id]
+cantidad integer
+precio_unitario  float
+descuento float
+iva float
+}
+
+Table estado_pedido {
+id int [pk, increment]
+name varchar
+description varchar
+}
+
+Table metodo_pago {
+id int [pk, increment]
+name varchar
+description varchar
+}
+
+Table formas_pago {
+id int [pk, increment]
+pedido_id int [ref: > pedido.id]
+metodo_pago_id int [ref: > metodo_pago.id]
+referencia varchar
+valor float
+description varchar
+}
+
+Table envio {
+id int [pk, increment]
+pedido_id int [ref: - pedido.id]
+fecha_envio date
+direccion_envio varchar
+codigo_postal varchar
+guia varchar
+valor_flete varchar
+description varchar
+ciudad_envio_id varchar [ref: > ciudad.id]
+trasportadoras_id int [ref: > trasportadora.id]
+}
+
+Table trasportadora {
+id int [pk, increment]
+name varchar
+description varchar
+}
+
+Table seguimiento_envio {
+id int [pk, increment]
+envio_id int [ref: > envio.id]
+fecha datetime
+description varchar
+}
+
+Table pais {
+id int [pk, increment]
+name varchar
+description varchar
+}
+
+Table departamento {
+id int [pk, increment]
+pais_id int [ref: > pais.id]
+name varchar
+description varchar
+}
+
+Table ciudad {
+id int [pk, increment]
+departamento_id int [ref: > departamento.id]
+name varchar
+description varchar
+}
+
+Table reseñas {
+id int [pk, increment]
+edicion_id int [ref: > edicion.id]
+pedido_verificado integer
+fecha datetime
+calificacion int
+evaluacion varchar
+pedido_id int [ref: > pedido.id]
+}

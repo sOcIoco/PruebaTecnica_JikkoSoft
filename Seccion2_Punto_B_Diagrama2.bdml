@@ -1,0 +1,69 @@
+// Definición del Data Mart de Ventas Retail
+
+// Tabla de Hechos de Ventas
+Table ventas_fact {
+  venta_id int [pk, increment]
+  fecha_id int [ref: > fecha_dim.fecha_id]
+  poroducto_id int [ref: > producto_dim.producto_id]
+  cliente_id int [ref: > cliente_dim.cliente_id]
+  almacen_id int [ref: > almacen_dim.almacen]
+  monto decimal(10, 2) 
+  cantidad int 
+}
+
+// Tabla de Hechos de Presupuestos
+Table Presupuesto_fact {
+  Presupuesto_id int [pk, increment]
+  fecha_id int [ref: > fecha_dim.fecha_id]
+  producto_id int [ref: > producto_dim.producto_id]
+  alamcen_id int [ref: > almacen_dim.almacen_id]
+  monto_presupuesto decimal(10, 2) 
+  cantidad int 
+}
+
+// Tabla de Hechos de Inventarios
+Table inventario_fact {
+  inventario_id int [pk, increment]
+  fecha_id int [ref: > fecha_dim.fecha_id]
+  producto_id int [ref: > producto_dim.producto_id]
+  almacen_id int [ref: > almacen_dim.almacen_id]
+  cost_unitario decimal(10, 2) 
+  cantidad_ingresos int 
+  cantidad_salidas int 
+  cantidad_saldo int
+}
+
+// Tabla de Dimensiones de Fecha
+Table fecha_dim {
+  fecha_id int [pk, increment]
+  fecha date 
+  dia int 
+  mes int 
+  anio int
+  semestre int
+  trimestre int
+  bimestre int
+  semana int 
+}
+
+// Tabla de Dimensiones de Producto
+Table producto_dim {
+  producto_id int [pk, increment]
+  producto_nombre varchar(255) 
+  categoria varchar(255) 
+  precio decimal(10, 2) 
+}
+
+// Tabla de Dimensiones de Cliente
+Table cliente_dim {
+  cliente_id int [pk, increment]
+  cliente_nombre varchar(255) 
+  ubicacion varchar(255) 
+}
+
+// Tabla de Dimensiones de Almacen
+Table almacen_dim {
+  almacen_id int [pk, increment]
+  almacen_nombre varchar(255) 
+  almacen varchar(255) 
+}
